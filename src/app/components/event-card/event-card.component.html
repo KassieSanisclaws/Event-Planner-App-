@@ -1,0 +1,40 @@
+<article class="event-card" [class.completed]="event.completed">
+    <div class="card-heading">
+          <span class="category">{{ event.category }}</span>
+     
+          <span class="status">
+              {{ event.completed ? 'Completed' : 'Planned' }}
+          </span>
+    </div>
+
+
+    <h3>{{ event.title }}</h3>
+
+    <p class="description">
+       {{ event.description || 'No Description Provided' }}
+    </p>
+
+    <div class="event-meta">
+       <p>
+          <strong>Date:</strong>
+          {{ event.date || date: 'mediumDate' }}
+       </p>
+
+       <p>
+          <strong>Time:</strong>
+          {{ '1970-014-01T' + event.time + ':00' | date: 'shortTime' }}
+    </p>
+
+    <p> 
+      <strong>Location:</strong>
+      {{ event.location || 'Not Specified' }}
+    </p>
+  </div>
+
+  <div class="card-actions">
+     <a [routerLink]="['/events', event.id]">Details</a>
+     <a [routerLink]="['/events', event.id, 'edit']">Edit</a>
+
+    <button type="button" class="delete-btn" (click)="requestDelete()">Delete</button>
+    </div>
+</article>

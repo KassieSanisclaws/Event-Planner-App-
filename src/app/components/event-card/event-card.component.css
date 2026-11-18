@@ -1,0 +1,83 @@
+.event-card {
+    background: white;
+    border: 1.3px solid #e2e8f0;
+    border-radius: 14px;
+    padding: 22px;
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    box-shadow: 0 4px 14px rgba(0, 0, 0, 0.06);
+    height: 100%;
+}
+
+
+.event-card.completed {
+    opacity: 0.78;
+    border-color: #8fc9a6;
+}
+
+.card-heading {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 10px;
+    flex-wrap: wrap;
+}
+
+.category {
+    background: #e2f4e9;
+    color: #166534;
+    padding: 6px 10px;
+    border-radius: 20px;
+    font-size: 13px;
+    font-weight: bold;
+}
+
+.status {
+    color: #64748b;
+    font-size: 13px;
+}
+
+h3 {
+    margin: 0;
+    color: #163d35;
+}
+
+.description {
+    color: #475569;
+    line-height: 1.5;
+    overflow-wrap: anywhere;
+}
+
+.event-meta {
+    font-size: 13px;
+    color: #334155;
+}
+
+.event-meta p {
+    margin: 8px 0;
+}
+
+.card-actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    margin-top: auto;
+    padding-top: 10px;
+}
+
+.card-actions a, 
+.card-actions button {
+    padding: 9px, 12px;
+    border: none;
+    border-radius: 7px;
+    background:  #176b58;
+    color: white;
+    text-decoration: none;
+    font-size: 13px;
+    cursor: pointer;
+}
+
+.card-actions .delete-btn {
+    background: #a72d36;
+}
