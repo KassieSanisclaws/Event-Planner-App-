@@ -1,1 +1,33 @@
-<p>event-editor works!</p>
+
+<section class="editor-page">
+  <a routerLink="/" class="back-link">
+    ← Back to Events
+  </a>
+
+  @if (notFound) {
+    <div class="editor-panel">
+      <h1>Event Not Found</h1>
+      <p>The event you requested does not exist.</p>
+      <a routerLink="/">Return to Dashboard</a>
+    </div>
+  } @else {
+    <div class="editor-panel">
+      <h1>
+        {{ isEditing ? 'Edit Event' : 'Create New Event' }}
+      </h1>
+
+      <p>
+        {{ isEditing
+          ? 'Update your event information below.'
+          : 'Enter the details for your new personal event.' }}
+      </p>
+
+      <app-event-form
+        [event]="editingEvent"
+        (formSaved)="saveEvent($event)"
+        (cancelled)="cancel()"
+      />
+    </div>
+  }
+</section>
+

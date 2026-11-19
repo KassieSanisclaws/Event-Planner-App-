@@ -1,1 +1,98 @@
-<p>event-details works!</p>
+<section class="details-page">
+  <a routerLink="/" class="back-link">
+    ← Back to Events
+  </a>
+
+  @if (event; as selectedEvent) {
+    <article class="details-card">
+      <div class="details-heading">
+        <span class="category">
+          {{ selectedEvent.category }}
+        </span>
+
+        <span class="status">
+          {{ selectedEvent.completed
+            ? 'Completed'
+            : 'Planned' }}
+        </span>
+      </div>
+
+      <h1>{{ selectedEvent.title }}</h1>
+
+      <div class="detail-row">
+        <strong>Description</strong>
+        <p>
+          {{ selectedEvent.description
+            || 'No description provided.' }}
+        </p>
+      </div>
+
+      <div class="detail-row">
+        <strong>Date</strong>
+        <p>
+          {{ selectedEvent.date | date:'fullDate' }}
+        </p>
+      </div>
+
+      <div class="detail-row">
+        <strong>Time</strong>
+        <p>
+          {{ '1970-01-01T' + selectedEvent.time + ':00'
+            | date:'shortTime' }}
+        </p>
+      </div>
+
+      <div class="detail-row">
+        <strong>Location</strong>
+        <p>
+          {{ selectedEvent.location || 'Not specified' }}
+        </p>
+      </div>
+
+      <div class="detail-row">
+        <strong>Created</strong>
+        <p>
+          {{ selectedEvent.createdAt | date:'medium' }}
+        </p>
+      </div>
+
+      <div class="actions">
+        <a
+          [routerLink]="[
+            '/events',
+            selectedEvent.id,
+            'edit'
+          ]"
+        >
+          Edit Event
+        </a>
+
+        <button
+          type="button"
+          (click)="toggleCompleted()"
+        >
+          {{ selectedEvent.completed
+            ? 'Mark Incomplete'
+            : 'Mark Completed' }}
+        </button>
+
+        <button
+          type="button"
+          class="delete-button"
+          (click)="deleteEvent()"
+        >
+          Delete Event
+        </button>
+      </div>
+    </article>
+  } @else {
+    <div class="details-card">
+      <h1>Event Not Found</h1>
+      <p>
+        The requested event does not exist
+        or has already been deleted.
+      </p>
+    </div>
+  }
+</section>
+

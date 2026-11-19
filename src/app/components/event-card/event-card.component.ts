@@ -13,13 +13,13 @@ import { PlannerEvent } from '../../models/event.model';
 export class EventCardComponent {
     @Input({ required: true }) event!: PlannerEvent;
     @Output() deleteRequested = new EventEmitter<string>();
-    @Output() completedRequested = new EventEmitter<string>();
+    @Output() completionRequested = new EventEmitter<string>();
 
     requestDelete(): void {
       this.deleteRequested.emit(this.event.id);
     }
 
     toggleCompleted(): void {
-      this.completedRequested.emit(this.event.id);
+      this.completionRequested.emit(this.event.id);
     }
 }

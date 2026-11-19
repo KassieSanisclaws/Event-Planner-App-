@@ -4,6 +4,7 @@ import { PlannerEvent, EventInput } from '../models/event.model';
 @Injectable({
   providedIn: 'root'
 })
+
 export class EventService {
   private readonly storagekey = 'personal-event-planner-events';
   private readonly eventState = signal<PlannerEvent[]>(
@@ -20,6 +21,13 @@ export class EventService {
 
     return this.eventState().filter(e => !e.completed && this.eventDateTime(e) < now).length;
   });
+
+   readonly pastCount = computed(() => {
+    const now = new Date();
+
+    return this.eventState().filter(e => 
+      !e.completed && this.eventDateTime(e) < now).length;
+   });
 
   getEventById(id: string): PlannerEvent | undefined {
     return this.eventState().find(e => e.id === id);

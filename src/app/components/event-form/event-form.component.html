@@ -1,1 +1,120 @@
-<p>event-form works!</p>
+<form
+  class="event-form"
+  [formGroup]="eventForm"
+  (ngSubmit)="submitForm()"
+>
+  <div class="form-field">
+    <label for="eventTitle">Event Title *</label>
+
+    <input
+      id="eventTitle"
+      type="text"
+      formControlName="title"
+      placeholder="Example: Family Dinner"
+      maxlength="100"
+    />
+
+    @if (
+      eventForm.controls.title.touched &&
+      eventForm.controls.title.invalid
+    ) {
+      <p class="error">
+        Enter a title between 3 and 100 characters.
+        Spaces alone are not valid.
+      </p>
+    }
+  </div>
+
+  <div class="form-field">
+    <label for="eventDescription">Description</label>
+
+    <textarea
+      id="eventDescription"
+      rows="4"
+      formControlName="description"
+      placeholder="Add details about your event..."
+      maxlength="1000"
+    ></textarea>
+  </div>
+
+  <div class="form-row">
+    <div class="form-field">
+      <label for="eventDate">Event Date *</label>
+
+      <input
+        id="eventDate"
+        type="date"
+        formControlName="date"
+      />
+
+      @if (
+        eventForm.controls.date.touched &&
+        eventForm.controls.date.invalid
+      ) {
+        <p class="error">Please select a date.</p>
+      }
+    </div>
+
+    <div class="form-field">
+      <label for="eventTime">Event Time *</label>
+
+      <input
+        id="eventTime"
+        type="time"
+        formControlName="time"
+      />
+
+      @if (
+        eventForm.controls.time.touched &&
+        eventForm.controls.time.invalid
+      ) {
+        <p class="error">Please select a time.</p>
+      }
+    </div>
+  </div>
+
+  <div class="form-field">
+    <label for="eventLocation">Location</label>
+
+    <input
+      id="eventLocation"
+      type="text"
+      formControlName="location"
+      placeholder="Example: Community Centre"
+      maxlength="150"
+    />
+  </div>
+
+  <div class="form-field">
+    <label for="eventCategory">Category *</label>
+
+    <select
+      id="eventCategory"
+      formControlName="category"
+    >
+      @for (category of categories; track category) {
+        <option [value]="category">
+          {{ category }}
+        </option>
+      }
+    </select>
+  </div>
+
+  <div class="form-actions">
+    <button
+      type="submit"
+      class="save-button"
+      [disabled]="eventForm.invalid"
+    >
+      {{ event ? 'Update Event' : 'Create Event' }}
+    </button>
+
+    <button
+      type="button"
+      class="cancel-button"
+      (click)="cancel()"
+    >
+      Cancel
+    </button>
+  </div>
+</form>

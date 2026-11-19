@@ -1,0 +1,72 @@
+.app-shell {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  background: #f1f8f4;
+}
+
+.app-header {
+  background: #176b58;
+  color: white;
+}
+
+.header-content {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 20px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 20px;
+}
+
+.brand {
+  color: white;
+  text-decoration: none;
+  font-size: 23px;
+  font-weight: bold;
+}
+
+nav {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 12px;
+}
+
+nav a {
+  color: white;
+  text-decoration: none;
+  padding: 10px;
+  border-radius: 7px;
+}
+
+nav a:hover,
+nav a.active {
+  background: rgba(255, 255, 255, 0.2);
+}
+
+.event-counter {
+  background: rgba(255, 255, 255, 0.15);
+  padding: 10px;
+  border-radius: 7px;
+}
+
+.main-content {
+  flex: 1;
+}
+
+.app-footer {
+  background: #176b58;
+  color: white;
+  text-align: center;
+  padding: 20px;
+  font-size: 13px;
+}
+
+@media (max-width: 650px) {
+  .header-content {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+}
