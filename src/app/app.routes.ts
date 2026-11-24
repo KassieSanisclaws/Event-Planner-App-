@@ -1,27 +1,24 @@
 import { Routes } from '@angular/router';
-import { EventListComponent } from './pages/event-list/event-list.component';
-import { EventEditorComponent } from './pages/event-editor/event-editor.component';
-import { EventDetailsComponent } from './pages/event-details/event-details.component';
 
 export const routes: Routes = [
     {
     path: '',
-    component: EventListComponent,
-    title: 'My Event'
+    loadComponent: () => import ('./pages/event-list/event-list.component').then(m => m.EventListComponent),
+    title: 'My Events'
     },
     {
     path: 'events/new',
-    component: EventEditorComponent,
+    loadComponent: () => import ('./pages/event-editor/event-editor.component').then(m => m.EventEditorComponent),
     title: 'Create Event'
     },
     {
     path: 'events/:id/edit',
-    component: EventEditorComponent,
+    loadComponent: () => import ('./pages/event-editor/event-editor.component').then(m => m.EventEditorComponent),
     title: 'Edit Event'
     },
     {
     path: 'events/:id',
-    component: EventDetailsComponent,
+    loadComponent: () => import ('./pages/event-details/event-details.component').then(m => m.EventDetailsComponent),
     title: 'Event Details'
     },
     {

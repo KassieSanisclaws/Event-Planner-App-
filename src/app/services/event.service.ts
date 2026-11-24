@@ -1,15 +1,23 @@
-import { Injectable, computed, signal } from '@angular/core';
+import { Injectable, computed, signal, OnDestroy } from '@angular/core';
 import { PlannerEvent, EventInput } from '../models/event.model';
 
 @Injectable({
   providedIn: 'root'
 })
 
-export class EventService {
+export class EventService implements OnDestroy {
   private readonly storagekey = 'personal-event-planner-events';
-  private readonly eventState = signal<PlannerEvent[]>(
-    this.loadEvents()
-  );
+  private readonly eventState = signal<PlannerEvent[]>(this.loadEvents());
+  private readonly currntTime = signal(Date.now());
+  private readonly clockInt = setInterval(() => {
+    this.currntTime.set(Date.now());
+  }, 60_000);
+  private readonly storageErrState = signal<string | null>(null);
+  readonly storageErr = this.storageErrState.asReadonly();
+
+  ngOnDestroy(): void {
+    clearInterval(this.clockInt);
+  }
 
   readonly events = this.eventState.asReadonly();
   readonly totalCount = computed(() => this.eventState().length);
@@ -17,16 +25,22 @@ export class EventService {
   readonly completedCount = computed(() => this.eventState().filter(e => e.completed).length);
 
   readonly upcomingCount = computed(() => {
-    const now = new Date();
+    const now = this.currntTime();
 
-    return this.eventState().filter(e => !e.completed && this.eventDateTime(e) < now).length;
+    return this.eventState().filter(e => {
+      const timeStamp = this.eventDateTime(e).getTime();
+
+    return !e.completed && timeStamp >= now;
+    }).length;  
   });
 
    readonly pastCount = computed(() => {
-    const now = new Date();
+    const now = this.currntTime();
 
-    return this.eventState().filter(e => 
-      !e.completed && this.eventDateTime(e) < now).length;
+    return this.eventState().filter(e => { 
+      const timeStamp = this.eventDateTime(e).getTime();
+      return !e.completed && timeStamp < now;
+    }).length;
    });
 
   getEventById(id: string): PlannerEvent | undefined {
@@ -128,8 +142,12 @@ export class EventService {
         this.storagekey,
         JSON.stringify(events)
        );
+
+       this.storageErrState.set(null);
     } catch (err) {
       console.error('Unable To Save Events:', err);
+
+      this.storageErrState.set('Changes Could Not Be Saved In The Browser Storage!.');
     }
   }
 }
